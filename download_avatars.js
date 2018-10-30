@@ -2,6 +2,16 @@ var request = require('request');
 var fs = require('fs');
 var token = require('./secrets.js')
 
+var args = process.argv.slice(2);
+
+if (args.length < 2) {
+  console.log("Error: Owner and repo not specified. Enter owner and repo.")
+} else {
+
+var Owner = args[0];
+var Name = args[1];
+
+
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
@@ -17,7 +27,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 }
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+getRepoContributors(Owner, Name, function(err, result) {
   if(err){
   console.log("Errors:", err);
   }
@@ -37,4 +47,4 @@ function downloadImageByURL(url, filePath) {
        .pipe(fs.createWriteStream(filePath));
 }
 
-
+}
